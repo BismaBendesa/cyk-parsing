@@ -5,3 +5,5 @@ st.write("""
 
 Please input your sentences in bahasa:
 """)
+
+input_sentence = st.text_input('Input Sentence')
