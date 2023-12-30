@@ -44,20 +44,38 @@ def is_accepted(dictionary_cnf, table_filling, flag, n):
 def cyk(dictionary_cnf, input_text):
     n = len(input_text.split())
     table_filling = [[set([]) for j in range(n)] for i in range(n + 1)]
-    print(dictionary_cnf)
     get_all_right_hand(dictionary_cnf, n)
     flag = string_exist(input_text, n)
     filling_bottom(dictionary_cnf, input_text, table_filling, n)
     filling_remaining(dictionary_cnf, table_filling, n)
     return is_accepted(dictionary_cnf, table_filling, flag, n)
 
+# Test Nomina
+# -------------------------
+# 48 | SP : Kamar tidur ini sangat nyaman (NP Pronoun adv adj) PASS ✅
+# 49 | SP : Pertunjukan Teater ini sangat indah (NP Pronoun adv adj)
+
+
+
 # Rules of the grammar
 R = {
-    "K": ['S P', 'S Ket', 'S P O', 'S P Pel', 'S P Ket', 'S P Pel Ket', 'S P O Ket', 'S P O Pel Ket'],
-    "S": ['NP', 'Pronoun', 'PropNoun', 'toko', 'wanita', 'kopi', 'tugas', 'ujian', 'pendidikan', 'tanah', 'motor', 'mobil','alkohol', 'saya', 'anda'], 
-    "P" : ['NP', 'VP', 'PP', 'AdjP', 'belajar', 'bermain', 'mengerjakan', 'meniru', 'mengendarai', 'minum', 'makan', 'main', 'mengetik', 'duduk', 'berdiri']
+    'K': ['S P'],
+    'Noun': ['Kamar', 'tidur'], 
+    'NP': ['Num NP', 'NP Adj', 'NP Noun', 'NP Noun', 'NP Pronoun', 'NP PropNoun', 'NP Adv', 'NP Adv', 'Kamar', 'tidur'], 
+    'Pronoun': ['ini'],
+    'Adv': ['sangat'],
+    'Adj':['nyaman'],
+    "S": ['NP', 'Pronoun', 'PropNoun', 'Num NP', 'NP Adj','NP Noun', 'NP Pronoun', 'NP PropNoun', 'NP Adv', 'Adv NP', 'Noun',],
+    "P" : ['NP', 'VP', 'Adv VP', 'Verb', 'PP', 'AdjP', 'Adv Adj','belajar', 'bermain', 'mengerjakan', 'meniru', 'mengendarai', 'minum', 'makan', 'main', 'mengetik', 'duduk', 'berdiri', 'toko', 'wanita', 'kopi', 'tugas', 'ujian', 'pendidikan', 'tanah', 'motor', 'mobil','alkohol', 'laptop', 'ikan', 'sandal', 'pensil', 'projek', 'vas', 'sepeda', 'gelas', 'piring', 'guru', 'polisi', 'aktor' ], 
+    "Ket" : ['Prep NP', 'pasar', 'kebun', 'rumah', 'di sekolah', 'ke jepang', 'tanpa gula', 'dari bali', 'dengan senyum', 'untuk indonesia'], 
+    "O" : ['NP', 'Num NP','Num','1','2','3','4','5','6','7','8','9','0', 'laptop', 'ikan', 'sandal', 'pensil', 'projek', 'vas', 'sepeda', 'gelas', 'piring','rumah',],
+    "Pel": ['NP', 'AdjP', 'Num', 'Num NP', 'sapu', 'kertas', 'meja', 'foto', 'kaca', 'tembok', ], 
+    "Prep" : ['di', 'ke', 'dari', 'pada'],
+    "Num": ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'nol'], 
+    'Verb' : ['belajar', 'bermain', 'mengerjakan', 'meniru', 'mengendarai', 'minum', 'makan', 'main', 'mengetik', 'duduk', 'berdiri', 'mancing'], 
+    'PropNoun': ['Bob', 'Denpasar', 'Sungai Amazon']
 }
-string_input = "saya bermain"
+string_input = "Kamar tidur ini sangat nyaman"
 if cyk(R, string_input)[0] == 'valid':
   print("The sentence is Valid")
 else: 
