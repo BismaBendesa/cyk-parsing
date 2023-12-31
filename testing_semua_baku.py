@@ -1,48 +1,31 @@
-import streamlit as st
+
 from cfg import *
 from cnf import *
 from cyk import *
 
-def periksa_input(user_input):
-    rules = open('rules.txt', 'r').read().splitlines()
-    start_symbol = "K"
-    dictionary_cfg = {}
-    dictionary_cnf = {}
-    # case sensitive, karena sudah banyak rules PropNoun kapital di awal kata :)
-    string_input = user_input.lower()
+rules = open('rules.txt', 'r').read().splitlines()
+start_symbol = "K"
+dictionary_cfg = {}
+dictionary_cnf = {}
+if __name__ == '__main__':
+    with open('baku.txt', 'r') as file:
+        list_sentences = file.read().splitlines()
+for sentence in list_sentences:
+    # print(sentence)
+    string_input = sentence
     cfg(dictionary_cfg, rules)
     cnf(dictionary_cfg, dictionary_cnf, start_symbol)
     if cyk(dictionary_cnf, string_input)[0] == 'valid':
-        st.markdown(
-        "<p style='font-weight:bold;'>Kalimat yang anda berikan sudah <span style='color:lightgreen;'>valid✅</span></p>",
-        unsafe_allow_html=True
-)
+        print("The sentence is Valid")
     else: 
         if cyk(dictionary_cnf, string_input)[0] == 'invalid':
-            print("The sentence is Invalid ❌")
-            st.markdown(
-            "<p style='font-weight:bold;'>Kalimat yang anda berikan sudah <span style='color:red;'>tidak valid❌</span></p>",
-            unsafe_allow_html=True
-            )
+            print("The sentence is Invalid")
         else:
-            print("The sentence is not Registered ⚠️")
-            st.markdown(
-            "<p style='font-weight:bold;'>Kalimat yang anda berikan sudah <span style='color:yellow;'>tidak didaftarkan⚠️</span></p>",
-            unsafe_allow_html=True
-            )
+            print("The sentence is not Registered")
     print(string_input)
 
-st.title('Parsing Kalimat Bahasa Indonesia')
-st.caption('Sistem kami akan memeriksa apakah input kalimat anda valid atau tidak')
-user_input = st.text_input('Input Kalimat', placeholder="Masukan kalimat anda...", key='input')
-st.button('Periksa', key='periksa-btn', on_click=lambda: periksa_input(user_input), type='primary')
-
-
-
-
-
 # Kalimat baku: SCORE ==> 
-# 1) Nenek mengambil sedikit daun ubi di kebun (S P O Ket) PASS
+# 1) Nenek mengambil sedikit daun ubi di kebun. (S P O Ket) PASS
 # 2) Banyak orang menghadiri acara itu. (S P O) PASS
 # 3) Sekitar lima mahasiswa mengikuti kegiatan pengabdian tersebut. (S P O) FAIL
 # 4) Orang dewasa saja diperbolehkan menaiki wahana itu. (S P Pel) FAIL
@@ -55,24 +38,24 @@ st.button('Periksa', key='periksa-btn', on_click=lambda: periksa_input(user_inpu
 # 11) Ikan koi banyak berenang di kolam taman. (S P Ket) PASS
 # 12) Kuda pacuan itu selalu berlari dengan cepat di lintasan pacu. (S P Pel Ket) FAIL
 # 13) Monyet kecil itu sering bergelantungan di ranting pohon. (S P Ket) FAIL
-# 14) Kelinci putih itu melompat-lompat di kebun. (S P Ket) FAIL
-# 15) Lumba-lumba itu bermain di laut lepas. (S P Ket) FAIL
-# 16) Kupu-kupu sering hinggap di bunga (S P Ket). PASS
-# 17) Sapi selalu mengunyah rumput di padang rumput. (S P O Ket) PASS
-# 18) Lebah itu mengumpulkan banyak nektar dari bunga. (S P O Pel) FAIL
-# 19) Seekor buaya sedang berjemur di tepi danau (S P Ket) FAIL
-# 20) Banyak mahasiswa hadir pada acara seminar itu. (S P Pel) FAIL
-# 21) Dr. Siti Rahayu memberikan kuliah di universitas. (S P O Ket) PASS
-# 22) Ani sedang berlibur di pantai. (S P Pel) PASS
-# 23) Adi Santoso merupakan pemimpin proyek tersebut. (S P Pel) PASS
-# 24) Bu Ratna adalah pemilik warung kopi itu.(S P Pel) PASS
-# 25) Prof. Dr. Hadi Prayitno adalah pakar bidang ekologi. (S P Pel) PASS
-# 26) Kiki menjadi juara pada lomba menyanyi. FAIL
-# 27) Ibu Sinta akan menjadi pembicara dalam seminar itu. (S P Pel Ket) PASS
-# 28) Bapak Haryono selalu membantu tetangga. (S P O) PASS
-# 29) Laut Mediterania sangat terkenal dengan keindahan pantainya (S P Pel). PASS
-# 30) Bukit Tinggi memiliki pemandangan alam indah (S P O).  PASS
-# 31) Danau Baikal adalah danau terdalam di dunia. (S P Pel Ket) PASS
+# 14) Kelinci putih itu melompat-lompat di kebun. (S P Ket) 
+# 15) Lumba-lumba itu bermain di laut lepas. (S P Ket)
+# 16) Kupu-kupu sering hinggap di bunga (S P Ket).
+# 17) Sapi selalu mengunyah rumput di padang rumput. (S P O Ket)
+# 18) Lebah itu mengumpulkan banyak nektar dari bunga. (S P O Pel)
+# 19) Seekor buaya sedang berjemur di tepi danau (S P Ket)
+# 20) Banyak mahasiswa hadir pada acara seminar itu. (S P Pel)
+# 21) Dr. Siti Rahayu memberikan kuliah di universitas. (S P O Ket)
+# 22) Ani sedang berlibur di pantai. (S P Pel)
+# 23) Adi Santoso merupakan pemimpin proyek tersebut. (S P Pel)
+# 24) Bu Ratna adalah pemilik warung kopi itu.(S P Pel)
+# 25) Prof. Dr. Hadi Prayitno adalah pakar bidang ekologi. (S P Pel)
+# 26) Kiki menjadi juara pada lomba menyanyi.
+# 27) Ibu Sinta akan menjadi pembicara dalam seminar itu. (S P Pel Ket)
+# 28) Bapak Haryono selalu membantu tetangga. (S P O)
+# 29) Laut Mediterania sangat terkenal dengan keindahan pantainya (S P Pel).
+# 30) Bukit Tinggi memiliki pemandangan alam indah (S P O).
+# 31) Danau Baikal adalah danau terdalam di dunia. (S P Pel Ket)
 # 32) Pantai Copacabana menjadi ikon kota Rio de Janeiro (S P Pel).
 # 33) Bali selalu terkenal dengan keindahan pantainya. (S P Pel)
 # 34) Kota Bandung itu terkenal dengan kulinernya. (S P Pel)
@@ -120,8 +103,8 @@ st.button('Periksa', key='periksa-btn', on_click=lambda: periksa_input(user_inpu
 # 76) Cita-cita tinggi adalah pendorong kesuksesan. (S P Pel)
 # 77) Kucing itu hewan peliharaan manis. (S P) PASS
 # 78) Pameran itu menampilkan karya seni kontemporer. (S P O)
-# 79) Budaya lokal menjadi daya tarik wisata daerah itu. (S P Pel) 
-# 80) Hewan peliharaan ini adalah teman setia keluarga kami. (S P Pel) FAIL
+# 79) Budaya lokal menjadi daya tarik wisata daerah itu. (S P Pel)
+# 80) Hewan peliharaan ini adalah teman setia keluarga kami. (S P Pel)
     
 #     Kalimat tidak baku: SCORE ==> 12/20 = 60% 
 # 1) Sangat menyukai kursi rotan. PASS
