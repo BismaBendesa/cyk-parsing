@@ -1,33 +1,48 @@
-
+import streamlit as st
 from cfg import *
 from cnf import *
 from cyk import *
 
-rules = open('rules.txt', 'r').read().splitlines()
-start_symbol = "K"
-dictionary_cfg = {}
-dictionary_cnf = {}
-
-
-
-
-
-# case sensitive, karena sudah banyak rules PropNoun kapital di awal kata :)
-string_input = "Bukit Tinggi memiliki pemandangan alam indah"
-if __name__ == '__main__':
+def periksa_input(user_input):
+    rules = open('rules.txt', 'r').read().splitlines()
+    start_symbol = "K"
+    dictionary_cfg = {}
+    dictionary_cnf = {}
+    # case sensitive, karena sudah banyak rules PropNoun kapital di awal kata :)
+    string_input = user_input.lower()
     cfg(dictionary_cfg, rules)
     cnf(dictionary_cfg, dictionary_cnf, start_symbol)
     if cyk(dictionary_cnf, string_input)[0] == 'valid':
-        print("The sentence is Valid")
+        st.markdown(
+        "<p style='font-weight:bold;'>Kalimat yang anda berikan sudah <span style='color:lightgreen;'>valid✅</span></p>",
+        unsafe_allow_html=True
+)
     else: 
         if cyk(dictionary_cnf, string_input)[0] == 'invalid':
-            print("The sentence is Invalid")
+            print("The sentence is Invalid ❌")
+            st.markdown(
+            "<p style='font-weight:bold;'>Kalimat yang anda berikan sudah <span style='color:red;'>tidak valid❌</span></p>",
+            unsafe_allow_html=True
+            )
         else:
-            print("The sentence is not Registered")
+            print("The sentence is not Registered ⚠️")
+            st.markdown(
+            "<p style='font-weight:bold;'>Kalimat yang anda berikan sudah <span style='color:yellow;'>tidak didaftarkan⚠️</span></p>",
+            unsafe_allow_html=True
+            )
     print(string_input)
 
+st.title('Parsing Kalimat Bahasa Indonesia')
+st.caption('Sistem kami akan memeriksa apakah input kalimat anda valid atau tidak')
+user_input = st.text_input('Input Kalimat', placeholder="Masukan kalimat anda...", key='input')
+st.button('Periksa', key='periksa-btn', on_click=lambda: periksa_input(user_input), type='primary')
+
+
+
+
+
 # Kalimat baku: SCORE ==> 
-# 1) Nenek mengambil sedikit daun ubi di kebun. (S P O Ket) PASS
+# 1) Nenek mengambil sedikit daun ubi di kebun (S P O Ket) PASS
 # 2) Banyak orang menghadiri acara itu. (S P O) PASS
 # 3) Sekitar lima mahasiswa mengikuti kegiatan pengabdian tersebut. (S P O) FAIL
 # 4) Orang dewasa saja diperbolehkan menaiki wahana itu. (S P Pel) FAIL

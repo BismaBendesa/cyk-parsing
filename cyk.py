@@ -51,6 +51,6 @@ def cyk(dictionary_cnf, input_text):
     flag = string_exist(input_text, n)
     filling_bottom(dictionary_cnf, input_text, table_filling, n)
     filling_remaining(dictionary_cnf, table_filling, n)
-    tabulate_table = tabulate.tabulate(table_filling)
-    print(tabulate_table)
+    # tabulate_table = tabulate.tabulate(table_filling)
+    # print(tabulate_table)
     return is_accepted(dictionary_cnf, table_filling, flag, n)
