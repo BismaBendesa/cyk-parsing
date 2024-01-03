@@ -1,7 +1,9 @@
 import streamlit as st
+import tabulate
 from cfg import *
 from cnf import *
 from cyk import *
+
 
 def periksa_input(user_input):
     rules = open('rules.txt', 'r').read().splitlines()
@@ -12,23 +14,36 @@ def periksa_input(user_input):
     string_input = user_input.lower()
     cfg(dictionary_cfg, rules)
     cnf(dictionary_cfg, dictionary_cnf, start_symbol)
-    if cyk(dictionary_cnf, string_input)[0] == 'valid':
+    result = cyk(dictionary_cnf, string_input) # valid/not valid , table
+    status, table = result
+    if status[0] == 'valid':
         st.markdown(
         "<p style='font-weight:bold;'>Kalimat yang anda berikan sudah <span style='color:lightgreen;'>valid✅</span></p>",
         unsafe_allow_html=True
-)
+        )
+        st.text(
+            table
+        )
+        print(string_input)
     else: 
-        if cyk(dictionary_cnf, string_input)[0] == 'invalid':
+        if status[0] == 'invalid':
             print("The sentence is Invalid ❌")
             st.markdown(
             "<p style='font-weight:bold;'>Kalimat yang anda berikan sudah <span style='color:red;'>tidak valid❌</span></p>",
             unsafe_allow_html=True
             )
+            st.text(
+            table,
+            )
+            print(string_input)
         else:
             print("The sentence is not Registered ⚠️")
             st.markdown(
             "<p style='font-weight:bold;'>Kalimat yang anda berikan sudah <span style='color:yellow;'>tidak didaftarkan⚠️</span></p>",
             unsafe_allow_html=True
+            )
+            st.text(
+            table
             )
     print(string_input)
 
