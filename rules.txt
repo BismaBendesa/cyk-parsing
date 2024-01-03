@@ -5,7 +5,7 @@ L3 -> L1 Pel
 L4 -> L1 L3 
 L5 -> L4 Ket 
 S -> NP Noun | NP AdjP | NP PropNoun | NumP NP| NP Num | NP Pronoun | NP Adv | Adv NP | NP VP | saya | putra | batu | hari | tiga | itu | Noun | PropNoun | Pronoun
-P -> Adv VP | Adv NP | Num NP | Prep NP| VP Adj | NP Adj | guru | makan | tidur | marah| Verb
+P -> Adv VP | Adv NP | Num NP | Prep NP| VP Adj | NP Adj | guru | makan | tidur | marah | Verb
 O -> NP Noun | NP Adj | NP PropNoun | NumP NP| NP Pronoun | NP Adv | Adv NP | saya | Putra | batu | tiga | Noun | PropNoun | Pronoun
 Pel -> NP Noun | NP AdjP | NP PropNoun | NumP NP| NP Num | NP Pronoun | NP Adv | Adv NP | Adv AdjP |Adv VP | NP VP | saya | putra | batu | hari | tiga | sedih | Noun | PropNoun | Pronoun
 Ket -> PP
