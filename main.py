@@ -49,6 +49,7 @@ def periksa_input(user_input):
 
 st.title('Parsing Kalimat Bahasa Indonesia')
 st.caption('Sistem kami akan memeriksa apakah input kalimat anda valid atau tidak')
+st.markdown("[Klik di sini untuk melihat kalimat yang bisa diuji](https://github.com/BismaBendesa/cyk-parsing/blob/main/testing_semua_baku.py)")
 user_input = st.text_input('Input Kalimat', placeholder="Masukan kalimat anda...", key='input')
 st.button('Periksa', key='periksa-btn', on_click=lambda: periksa_input(user_input), type='primary')
 
